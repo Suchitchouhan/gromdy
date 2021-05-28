@@ -1,0 +1,36 @@
+{% extends "prico/base.html" %}
+{% load static %}
+
+{% block content %} 
+  <section class="about_section layout_padding">
+   <div class="container d-flex justify-content-center">
+     <h1 class="align-center">
+        About us
+      </h1>
+   </div>
+    <div class="container">
+      {% for x in about_us %}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="detail-box">
+            <img src="{{ x.image.url }}" height="600px"  class="img-fluid" alt="Responsive image">
+            <h4>
+              {{ x.name }}
+            </h4>
+            <p>
+              {{ x.description }}
+            </p>
+            <!-- <a href="">
+              Read More
+            </a> -->
+          </div>
+        </div>
+      </div>
+      
+      {% endfor %}
+    </div>
+
+  </section>
+{% endblock content %}
+
+  

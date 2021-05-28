@@ -1,0 +1,95 @@
+{% extends "cms/base.html" %}
+      {% block content %}
+
+
+<div id="dashboardPage"></div>
+<div class="pcoded-content">
+  <div class="pcoded-inner-content">
+    <div class="main-body">
+      <div class="page-wrapper">
+        <div class="page-header card">
+          <div class="row align-items-end">
+            <div class="col-sm-6 col-lg-6">
+              <div class="page-header-title d-flex">
+                <i class="ti-home bg-c-green"></i>
+                <div class="d-inline">
+                  <h4>Dashboard</h4>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-6">
+              <div class="page-header-breadcrumb">
+                <div class="page-header-breadcrumb">
+                  <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                      <a href="/">
+                        <i class="icofont icofont-home"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page-body">
+          <div class="row height-box">
+            <div class="col-12 col-sm-6 col-md-3 col-lg-3 full-height">
+              <div class="card bg-c-broun text-white widget-visitor-card">
+                <div class="card-block-small text-center">
+                  <h2>{{ totot_order }}</h2>
+                  <h6>Total Number of Orders</h6>
+                  <i class="ti-user courner"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 col-lg-3 full-height">
+              <div class="card bg-c-yellow text-white widget-visitor-card">
+                <div class="card-block-small text-center">
+                  <h2>{{ totot_order_today }}</h2>
+                  <h6>Total Number of Order Today</h6>
+                  <i class="ti-announcement courner"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 col-lg-3 full-height">
+              <div class="card bg-c-pink text-white widget-visitor-card">
+                <div class="card-block-small text-center">
+                  <h3>{{ total_customer }}</h3>
+                  <h6>Total Number of User</h6>
+                  <i class="fa fa-download courner"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 col-lg-3 full-height">
+              <div class="card bg-c-blue text-white widget-visitor-card">
+                <div class="card-block-small text-center">
+                  <h3>{{ total_product }}</h3>
+                  <h6>Total Number of Products</h6>
+                  <i class="ti-microphone courner"></i>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-md-12 col-lg-12">
+              <div class="card project-task">
+                <div class="card-header">
+                  <div class="card-header-left">
+                    <h4>Total Revenue</h4>
+                  </div>
+                  <div class="card-header-right">
+                    <h5 class="text-danger">34</h5>
+                  </div>
+                  <div class="graph-img">
+                    <canvas id="canvas"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+     

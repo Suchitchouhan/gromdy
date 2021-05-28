@@ -1,0 +1,35 @@
+{% extends "prico/base.html" %}
+{% load static %}
+
+{% block content %} 
+  <section class="about_section layout_padding">
+   <div class="container d-flex justify-content-center">
+     <h1 class="align-center">
+        Terms and Conditions
+      </h1>
+   </div>
+    <div class="container">
+      {% for x in terms_and_conditions %}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="detail-box">
+            <h4>
+              {{ x.term }}
+            </h4>
+            <p>
+              {{ x.condition }}
+            </p>
+            <!-- <a href="">
+              Read More
+            </a> -->
+          </div>
+        </div>
+      </div>
+      
+      {% endfor %}
+    </div>
+
+  </section>
+{% endblock content %}
+
+  

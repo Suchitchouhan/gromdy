@@ -1,0 +1,703 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="icon" href="https://images.unsplash.com/photo-1584362917165-526a968579e8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1082&q=80" type="image/gif" />
+  <meta name="keywords" content="{{ product.keyword }}" />
+  <meta name="description" content="{{ product.description }}" />
+  <meta name="author" content="Suchit chouhan" />
+  <title>{{ product.name }}</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'prico/css/bootstrap.css' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="{% static 'prico/css/font-awesome.min.css' %}" rel="stylesheet" />
+  <link href="{% static 'prico/css/style.css' %}" rel="stylesheet" />
+  <link href="{% static 'prico/css/responsive.css' %}" rel="stylesheet" />
+  <style type="text/css">
+	body {
+  font-family: 'open sans';
+  overflow-x: hidden; }
+
+img {
+  max-width: 100%; }
+
+.preview {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+  @media screen and (max-width: 996px) {
+    .preview {
+      margin-bottom: 20px; } }
+
+.preview-pic {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1; }
+
+.preview-thumbnail.nav-tabs {
+  border: none;
+  margin-top: 15px; }
+  .preview-thumbnail.nav-tabs li {
+    width: 18%;
+    margin-right: 2.5%; }
+    .preview-thumbnail.nav-tabs li img {
+      max-width: 100%;
+      display: block; }
+    .preview-thumbnail.nav-tabs li a {
+      padding: 0;
+      margin: 0; }
+    .preview-thumbnail.nav-tabs li:last-of-type {
+      margin-right: 0; }
+
+.tab-content {
+  overflow: hidden; }
+  .tab-content img {
+    width: 100%;
+    -webkit-animation-name: opacity;
+            animation-name: opacity;
+    -webkit-animation-duration: .3s;
+            animation-duration: .3s; }
+
+.card {
+  margin-top: 50px;
+  background: #ecf6f7;
+  padding: 3em;
+  line-height: 1.5em; }
+
+@media screen and (min-width: 997px) {
+  .wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; } }
+
+.details {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column; }
+
+.colors {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1; }
+
+.product-title, .price, .sizes, .colors {
+  text-transform: UPPERCASE;
+  font-weight: bold; }
+
+.checked, .price span {
+  color: #225662; }
+
+.product-title, .rating, .product-description, .price, .vote, .sizes {
+  margin-bottom: 15px;
+  color:#225662; }
+
+.product-title {
+  margin-top: 0; }
+
+.size {
+  margin-right: 10px; }
+  .size:first-of-type {
+    margin-left: 40px; }
+
+.color {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  height: 2em;
+  width: 2em;
+  border-radius: 2px; }
+  .color:first-of-type {
+    margin-left: 20px; }
+
+.add-to-cart, .like {
+  background: #225662;
+  padding: 1.2em 1.5em;
+  border: none;
+  text-transform: UPPERCASE;
+  font-weight: bold;
+  color: #fff;
+  -webkit-transition: background .3s ease;
+          transition: background .3s ease; }
+  .add-to-cart:hover, .like:hover {
+    background: #225662;
+    color: #fff; }
+
+.not-available {
+  text-align: center;
+  line-height: 2em; }
+  .not-available:before {
+    font-family: fontawesome;
+    content: "\f00d";
+    color: #fff; }
+
+.orange {
+  background: #225662; }
+
+.green {
+  background: #225662; }
+
+.blue {
+  background: #0076ad; }
+
+.tooltip-inner {
+  padding: 1.3em; }
+
+@-webkit-keyframes opacity {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(3);
+            transform: scale(3); }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(3);
+            transform: scale(3); }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1); } }
+
+/*# sourceMappingURL=style.css.map */
+</style>
+
+  <script type="text/javascript">
+    $(function(){
+      var a = $.cookie("userid");
+      if (a == undefined){
+        $.ajax({
+          url:"{% url 'generate_custid' %}",
+          method:"GET",
+          data:{},
+          success:function(data){
+             $.cookie("userid", data.userid,{expires: 90,path:'/'});
+          }
+
+        });
+
+      }else{
+        mydata={"userid":a}
+        $.ajax({
+            url:"{% url 'check_custid' %}",
+            method:"POST",
+            data:mydata,
+            success:function(data){
+             if (data.status == "notexists"){
+                $.ajax({
+                  url:"{% url 'generate_custid' %}",
+                  method:"GET",
+                  data:{},
+                  success:function(data1){
+                    $.cookie("userid", data1.userid,{expires: 90,path:'/'});
+                  }
+
+                });
+
+
+             }
+          }
+
+
+        });
+      
+      }
+      
+});
+  </script>
+</head>
+
+<body>
+            <div class="top-bar">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-2 col-md-2">
+                        <div class="logo">
+                            <a href="/">
+                                 <img src="{% static 'prico/images/matsl_logo_jpg.png' %}" alt="Logo" width="70px" height="70px">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 d-lg-block">
+                      <form action="{% url 'search_product' %}" method="POST">
+                       {% csrf_token %}
+                        <div class="input-group mb-2">
+                          <input type="text" id="tags" name="name" class="form-control" placeholder="Enter Something" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                          <div class="input-group-append">
+                            <button type="submit" class="input-group-text" id="basic-addon2" id="Search-button" style="font-size: 0.8rem;">Search</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    
+                     <div class="col-md-4 col-lg-4">
+
+                     
+                    <a href="/cart" class="btn btn-sm" style="color: #225662;" href="/view_cart"><span class="fa fa-cart-plus">( </span><span id="cartvalue">{{ cart_count }}</span>)</a>  
+                      <a class="btn btn-sm" style="color: #225662;" href="/remember_list"><span class="fa fa-heartbeat"></span>(<span id="remember_list">{{ remember_count }}</span>)</a>
+                      
+                      {% if user.is_authenticated %}
+                      <a href="/account" style="color: #225662;" class="btn btn-sm y"><span class="fa fa-shopping-bag"></span></a>
+                      {% ifequal notification_available 'no' %}
+                      <a href="/notification" style="color: #225662;" class="btn btn-sm "><span class="fa fa-bell"></span></a>
+                      {% else %}
+                      <a href="/notification" style="color: #E5587F;" class="btn btn-sm "><span class="fa fa-bell"></span></a>
+                      {% endifequal %}
+                      {% else %}
+                      <a href="/login" class="btn btn-sm" style="background-color: #f5f5f5;color: #225662;">Login/Signup</a>
+                      {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <!-- <a class="navbar-brand" href="/">
+            <span>
+              matsl
+            </span>
+          </a> -->
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  ">
+              <li class="nav-item ">
+                <a class="nav-link" href="/">Home 
+                  <span class="sr-only">()</span></a>
+                </li>
+              {% for x in head %}
+              <li class="nav-item dropdown dmenu ">
+              <a class="nav-link dropdown-toggle " href="/categorys/{{ x.0.url_slug }}" id="navbardrop" data-toggle="dropdown">
+                {{ x.0.name }}
+              </a>
+              <div class="dropdown-menu sm-menu">
+                {% for y in x.1 %}
+                <a class="dropdown-item" href="/@@={{ y.url_slug }}">{{ y.name }}</a>
+                {% endfor %}
+              </div>
+            </li>
+            {% endfor %}
+
+             
+              <li class="nav-item dropdown dmenu ">
+              <a class="nav-link dropdown-toggle " href="/" id="navbardrop" data-toggle="dropdown">
+                Offers
+              </a>
+              <div class="dropdown-menu sm-menu">
+                {% for x in off %}
+                <a class="dropdown-item" href="/offer/{{ x.url_slug }}">{{ x.name }}</a>
+                {% endfor %}
+              </div>
+            </li>
+              
+             
+            </ul>
+  
+          </div>
+        </nav>
+      </div>
+    </header>
+
+     	<div class="container" >
+		<div class="card" style="box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.15);">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+						
+						<div class="preview-pic tab-content">
+							{% if image0 %}
+						  <div class="tab-pane active" id="pic-1"><img src="{{ image0 }}"  /></div>
+						  {% endif %}
+						  {% if image1 %}
+						  <div class="tab-pane" id="pic-2"><img src="{{ image1 }}" /></div>
+						  {% endif %}
+						  {% if image2 %}
+						  <div class="tab-pane" id="pic-3"><img src="{{ image2 }}" /></div>
+						  {% endif %}
+						  {% if image3 %}
+						  <div class="tab-pane" id="pic-4"><img src="{{ image3 }}" /></div>
+						  {% endif %}
+						  {% if image4 %}
+						  <div class="tab-pane" id="pic-5"><img src="{{ image4 }}" /></div>
+						  {% endif %}
+						  {% if image5 %}
+						  <div class="tab-pane" id="pic-6"><img src="{{ image5 }}" /></div>
+						  {% endif %}
+						  {% if image6 %}
+						  <div class="tab-pane" id="pic-7"><img src="{{ image6 }}" /></div>
+						  {% endif %}
+
+						  {% if image7 %}
+						  <div class="tab-pane" id="pic-8"><img src="{{ image7 }}" /></div>
+						  {% endif %}
+						  {% if image8 %}
+						  <div class="tab-pane" id="pic-9"><img src="{{ image8 }}" /></div>
+						  {% endif %}
+						  {% if image9 %}
+						  <div class="tab-pane" id="pic-10"><img src="{{ image9 }}" /></div>
+						  {% endif %}
+						  {% if image10 %}
+						  <div class="tab-pane" id="pic-11"><img src="{{ image10 }}" /></div>
+						  {% endif %}
+						  {% if image11 %}
+						  <div class="tab-pane" id="pic-12"><img src="{{ image11 }}" /></div>
+						  {% endif %}
+
+
+						</div>
+						<ul class="preview-thumbnail nav nav-tabs">
+							{% if image0 %}
+						  <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="{{ image0 }}" /></a></li>
+						  {% endif %}
+						   {% if image1 %}
+						  <li><a data-target="#pic-2" data-toggle="tab"><img src="{{ image1 }}" /></a></li>
+						  {% endif %}
+						  {% if image2 %}
+						  <li><a data-target="#pic-3" data-toggle="tab"><img src="{{ image2 }}" /></a></li>
+						  {% endif %}
+						  {% if image3 %}
+						  <li><a data-target="#pic-4" data-toggle="tab"><img src="{{ image3 }}" /></a></li>
+						  {% endif %}
+						  {% if image4 %}
+						  <li><a data-target="#pic-5" data-toggle="tab"><img src="{{ image4 }}" /></a></li>
+						  {% endif %}
+						  {% if image5 %}
+						  <li><a data-target="#pic-6" data-toggle="tab"><img src="{{ image5 }}" /></a></li>
+						  {% endif %}
+						  {% if image6 %}
+						  <li><a data-target="#pic-7" data-toggle="tab"><img src="{{ image6 }}" /></a></li>
+						  {% endif %}
+						  {% if image7 %}
+						  <li><a data-target="#pic-8" data-toggle="tab"><img src="{{ image7 }}" /></a></li>
+						  {% endif %}
+						  {% if image8 %}
+						  <li><a data-target="#pic-9" data-toggle="tab"><img src="{{ image8 }}" /></a></li>
+						  {% endif %}
+						  {% if image9 %}
+						  <li><a data-target="#pic-10" data-toggle="tab"><img src="{{ image9 }}" /></a></li>
+						  {% endif %}
+						  {% if image10 %}
+						  <li><a data-target="#pic-11" data-toggle="tab"><img src="{{ image10 }}" /></a></li>
+						  {% endif %}
+						  {% if image11 %}
+						  <li><a data-target="#pic-12" data-toggle="tab"><img src="{{ image11 }}" /></a></li>
+						  {% endif %}
+						 
+						  
+						 
+						</ul>
+						
+					</div>
+					<div class="details col-md-6">
+						<h3 class="product-title">{{ product.name }}</h3>
+						<h5><span style="color: #225662"> Brandname: {{ product.brandname }} </span></h5>
+						<div class="rating">
+							<span class="review-no">{{ review_count }} reviews</span>
+						</div>
+						<p class="product-description">{{ product.description }}</p>
+						<h6 class="price">current price: <span style="color: #225662"> ₹ {{ product.actual_price }}</span></h6>
+            <h6 class="price">selling price: <span style="color: #225662"> ₹ {{ product.price }}</span></h6>
+            <h6 class="price">saving : <span style="color: #225662"> ₹ {{ saving }}</span></h6>
+
+
+
+						<!-- <h6 class="sizes">sizes:
+							<span class="size" data-toggle="tooltip" title="small">s</span>
+							<span class="size" data-toggle="tooltip" title="medium">m</span>
+							<span class="size" data-toggle="tooltip" title="large">l</span>
+							<span class="size" data-toggle="tooltip" title="xtra large">xl</span>
+						</h6>
+						<h6 class="colors">colors:
+							<span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
+							<span class="color green"></span>
+							<span class="color blue"></span>
+						</h6> -->
+						<div class="action" >
+							<button class="add-to-cart btn btn-default" type="button" data-sid="{{ product.id }}" id="addtocart" >add to cart</button>
+							<button class="like btn btn-default" type="button" data-sid="{{ product.id }}" id="addremember" ><span class="fa fa-heart"></span></button>
+						</div>
+					</div>
+				</div>
+         {% ifequal feature_exists 'yes' %}
+				<h5 style="color: #225662;font-weight: bold;text-transform: UPPERCASE;">Features</h5>
+        {% endifequal %}
+
+				{% for x in feature %}
+				<div class="wrapper row ">
+					<div class="preview col-md-3 ">
+						<h6 style="color: #225662;font-weight: bold;"> {{ x.name }}</h6>
+					</div>
+					<div class="preview col-md-9 ">
+						<p style="color: #225662;font-weight: bold;">{{ x.description }}</p>
+					</div>
+				</div>
+				{% endfor %}
+        {% ifequal side_effect_exists 'yes' %}
+				<h5 style="color: #225662;font-weight: bold;text-transform: UPPERCASE;">Side Effect</h5>
+        {% endifequal %}
+				{% for x in side_effect %}
+				<div class="wrapper row ">
+					<div class="preview col-md-12">
+						<h6 style="color: #225662;font-weight: bold;"><i class="fa fa-dot-circle-o" style="font-size:12px"></i> {{ x.name }}</h6>
+						<p style="color: #225662;font-weight: bold;"><i class="fa fa-dot-circle-o" style="font-size:12px;color: blue;"></i> {{ x.summery }}</p>
+					</div>
+				</div>
+				{% endfor %}
+        {% ifequal question_exists 'yes' %}
+				<h5 style="color: #225662;font-weight: bold;text-transform: UPPERCASE;">Question And Answer</h5>
+				{% endifequal %}
+        {% for x in question %}
+				<div class="wrapper row border border-secondary">
+					<div class="preview col-md-12">
+						<h6 style="color: #225662;font-weight: bold;">Question: {{ x.ques }}</h6>
+						<p style="color: #225662;font-weight: bold;">Answer: {{ x.answer }}</p>
+					</div>
+				</div>
+				{% endfor %}
+
+
+			</div>
+		</div>
+	</div>
+
+
+ <section class="product_section ">
+    <div class="container">
+      <div class="product_heading">
+        <h2 style="border-radius: 40px;">
+          Related Products
+        </h2>
+      </div>
+      <div class="product_container">
+        {% for x,y,a,b,c in productO %}
+        <div class="box" style="box-shadow: 0 0 25px 0 rgba(18, 151, 157, 0.46);">
+          <div class="box-content">
+             <a href="$$={{ x.url_slug }}">
+            <div class="img-box">
+              <img src="{{ y }}" alt="">
+            </div>
+          </a>
+            <a href="/$$={{ x.url_slug }}">
+            <div class="detail-box">
+              <div class="text">
+                <h6>
+                  {{ x.name }}
+                </h6>
+                <h6>
+                 <span> 
+                  ₹ {{ a }}</span> | <span>
+                    <del style="color: red;">₹ {{ b }} </del>
+                  </span> | <span>
+                     saving ₹ {{ c }}
+                  </span>
+                </h6>
+              </div>    
+            </div>
+            </a>
+              <div class="btn-box" >
+             <a type="button"  data-sid="{{ x.id }}" id="addtocart" class=" btn  btn-default btn-sm" ><span class="fa fa-cart-plus"></span></a>
+
+            <a type="button" data-sid="{{ x.id }}" id="addremember" class="like btn btn-default btn-sm" type="button"><span class="fa fa-heart"></span></a>
+          </div>
+          </div>
+        
+
+
+        </div>
+        {% endfor %}
+      </div>
+
+       <div class="product_heading">
+        <h2 style="border-radius: 40px;font-size: 11px;">
+          We hope you are getting better service from us.be safe and healthy
+        </h2>
+      </div>
+    </div>
+  </section>
+
+
+
+	<section class="contact_section layout_padding">
+    <div class="container">
+     
+      <div class="row">
+        <div class="col-md-12">
+           <div class="heading_container">
+	        <h2 style="color: #225662;font-weight: bold; ">
+	          Reviews({{ review_count }})
+	        </h2>
+	      </div>
+          <div class="form_container">
+           
+              <div>
+                <input type="text" placeholder="Enter Your Reviews About Medicine" name="review" id='reivew' required>
+              </div>
+              <div class="btn_box">
+                <input type="button" style="background-color: #225662;color: #ffffff" name="" data-sid="{{ product.id }}" value="POST" id="postreview" class="btn">
+              </div>
+
+          </div>
+        </div>
+        <div class="reviews" id="postreview">
+        {% for x in review %}
+			<div class="preview col-md-12" >
+				<h4 style="color: #225662;font-weight: bold;">{{ x.user.first_name }} {{ x.user.last_name }}</h4>
+				<p style="color: #225662;font-weight: bold;">{{ x.comment }}</p>
+			</div>
+		{% endfor %}
+    </div>
+      </div>
+       <nav aria-label="Page navigation example">    
+      {% if review.has_other_pages %}
+        <ul class="pagination">
+          {% if review.has_previous %}
+            <li class="page-item"><a href="?page={{ review.previous_page_number }}" class="page-link">Previous</a></li>
+          {% else %}
+            <li class="disabled page-item"><span  class="page-link">Start</span></li>
+          {% endif %}
+          {% for i in review.paginator.page_range %}
+            {% if review.number == i %}
+              <li class="active page-item"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+            {% else %}
+              <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+            {% endif %}
+          {% endfor %}
+          {% if review.has_next %}
+            <li class="page-item"><a href="?page={{ review.next_page_number }}" class="page-link">Next</a></li>
+          {% else %}
+            <li class="disabled page-item"><span class="page-link">End</span></li>
+          {% endif %}
+        </ul>
+      {% endif %}
+    </nav>
+    </div>
+  </section>
+
+  <!-- info section -->
+   <section class="info_section layout_padding2">
+    <div class="container">
+      <div class="info_logo">
+        <h2>
+         {{ siteinfo.title }}
+        </h2>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="info_contact">
+            <div>
+              <a href="/about_us" style="color: #B1CADC"><strong>About Us</strong></a>
+            </div>
+             <div>
+              <a href="/contactus" style="color: #B1CADC"><strong>Contact Us</strong></a>
+            </div>
+             <div>
+              <a href="/term_and_conditions" style="color: #B1CADC"><strong>terms and conditions</strong></a>
+            </div>
+            
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="info_info">
+            <h5>
+              Informations
+            </h5>
+            <h6>
+             {{ siteinfo.description }}</h6><h6>
+              Address: {{ siteinfo.address }}</h6><h6>
+              Email: {{ siteinfo.email }}</h6><h6>
+              mobile: {{ siteinfo.mobile }}
+            </h6>
+          </div>
+        </div>
+
+      
+
+        <div class="col-md-4">
+          <div class="info_contact">
+            {% for x in sitemain_category %}
+
+            <div>
+              <a href="/categorys/{{ x.url_slug }}" style="color: #B1CADC"><strong>{{ x.name }}</strong></a>
+            </div>
+            
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end info_section -->
+
+
+  <!-- footer section -->
+  <section class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear"></span> All Rights Reserved By
+        <a href="">Suchit Chouhan</a>
+      </p>
+    </div>
+  </section>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script type="text/javascript" src="{% static 'prico/js/jquery-3.4.1.min.js' %}"></script>
+  <!-- popper js -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+  <!-- bootstrap js -->
+  <script type="text/javascript" src="{% static 'prico/js/bootstrap.js' %}"></script>
+  <!-- custom js -->
+  <script type="text/javascript" src="{% static 'prico/js/custom.js' %}"></script>
+  <!-- Google Map -->
+ <!--  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
+  </script> -->
+  <script src="{% static 'prico/js/sweetalert.js' %}">
+  </script>
+  
+  {% include 'prico/ajax.html' %}
+
+  <!-- End Google Map -->
+
+</body>
+
+</html>

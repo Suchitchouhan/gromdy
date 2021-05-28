@@ -1,0 +1,174 @@
+{% extends "prico/base.html" %}
+{% load static %}
+
+      {% block content %}
+      
+       <section class="slider_section ">
+        <div class="">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          {% for x,y in slider %}
+          {% ifequal y '1' %}
+          <div class="carousel-item active">
+            <a href="{{ x.url_name }}">
+            <img class="d-block w-100" src="{{ x.image.url }}" alt="First slide"></a>
+            <div class="carousel-caption d-none d-md-block">
+              <h2>{{ x.name }}</h2>
+              <h5>{{ x.description }}</h5>
+            </div>
+          </div>
+          {% else %}
+          <div class="carousel-item">
+            <a href="{{ x.url_name }}">
+            <img class="d-block w-100" src="{{ x.image.url }}" alt="Second slide"></a>
+            <div class="carousel-caption d-none d-md-block">
+              <h2>{{ x.name }}</h2>
+              <h5>{{ x.description }}</h5>
+            </div>
+          </div>
+          {% endifequal %}
+          {% endfor %}
+         
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+      </div>
+    </section>
+    <!-- end slider section -->
+
+  <!-- service section -->
+
+  <section class="service_section">
+    <div class="container-fluid">
+      <div class="row">
+        {% for x in benifit %}
+        <div class="col-md-6 col-lg-3">
+          <div class="box ">
+            <div class="img-box">
+              <img src="{{ x.image.url }}" alt="">
+            </div>
+            <div class="detail-box">
+              <h5>
+               {{ x.name }}
+              </h5>
+              <p>
+                {{ x.description }}
+              </p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <br>
+  <br>
+  <section class="product_section ">
+     <br>
+  <br>
+  </section>
+  <div class="container">
+    <h6>{{ siteinfo.description }}</h6>
+  </div>
+
+      <div class="container">
+            <div class="text-muted mt-5 mb-5 text-center display-4">Our Categorys</div>
+            <hr/>
+            <div class="row">
+                {% for x in best_category %}
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 p-2">
+                    <div class="card p-3 shadow text-center border-0">
+                        <div class="card-body">
+                            <img src="{{ x.category.image.url }}" width="180" height="130">                            <hr/>
+                            <a href="/@@={{ x.category.url_slug }}"><h2 class="card-title display-1" style="font-size:3.0vmin;">{{ x.category.name }}</h2></a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+               
+            </div>
+          </div>
+
+ <br>
+  <br>
+  <div class="container">
+    <h6>{{ siteinfo.info1 }}</h6>
+  </div>
+ 
+{% for i in offers %}
+  <section class="product_section " >
+    <div class="container">
+      <div class="product_heading">
+        <a href=""><h2>
+          {{ i.0.name }}
+        </h2> </a>
+
+      </div>
+      <div class="product_container" >
+        {% for x,y,a,b,c in i.1 %}
+         <div class="box" style="box-shadow: 0 0 25px 0 rgba(18, 151, 157, 0.46);border-radius:1.5rem;">
+          <div class="box-content">
+             <a href="$$={{ x.url_slug }}">
+            <div class="img-box">
+              <img src="{{ y }}" alt="">
+            </div>
+          </a>
+            <a href="/$$={{ x.url_slug }}">
+            <div class="detail-box">
+              <div class="text">
+                <h6>
+                  {{ x.name }}
+                </h6>
+                <h6>
+                 <span> 
+                  ₹ {{ a }}</span> | <span>
+                   ₹ <del style="color: red;">{{ b }} </del>
+                  </span> | <span>
+                     saving {{ c }}₹
+                  </span>
+                </h6>
+              </div>    
+            </div>
+            </a>
+          </div>
+          <div class="btn-box" >
+             <a type="button" style="background-color: #225662;color: #ffffff" name="" data-sid="{{ x.id }}"  id="addtocart" class="btn btn-default "><span class="fa fa-cart-plus"></span></a>
+
+            <a type="button" data-sid="{{ x.id }}" id="addremember" class="like btn btn-default" type="button"><span class="fa fa-heart"></span></a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="product_heading">
+        <h6>
+          {{ i.0.description }}
+        </h6>
+      </div>
+    </div>
+  </section>
+{% endfor %}
+
+<br>
+  <br>
+    <div class="container">
+      <h6>{{ siteinfo.info2 }}</h6>
+    </div>
+  <!-- end product section -->
+
+
+  <!-- product section -->
+
+
+
+
+{% endblock content %}
+      

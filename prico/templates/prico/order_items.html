@@ -1,0 +1,52 @@
+{% extends "prico/base.html" %}
+{% load static %}
+{% block content %} 
+
+    <div class="container">
+      <h5 style="color: #199fc8;font-weight: bold;text-transform: UPPERCASE;">
+    Order no. <span> {{ order_uid }} .</span>Order Items</h5>
+  </div>
+   
+   <div class="container" id="alert">
+     <h6>{{ status }}</h6>
+   </div>
+   
+  <section class="contact_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class=" table-responsive" >
+        <table class="table table-hover" style=" font-family: arial, sans-serif;border-collapse: collapse;width: 100%;">
+          <thead>
+            <tr>
+              <!-- <th>Image</th> -->
+              <th scope="col">Name</th>
+              <th scope="col">description</th>
+              <th scope="col">brandname</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+            </tr>
+          <!--Table head-->
+          </thead>
+          <!--Table body-->
+          <tbody class="tbody">
+            {% for x in item %}
+            <tr>
+              <!-- <th><img src="{{ y }}" width="70px" height="50px"></th> -->
+              <th><a href="$$={{ x.product.url_slug }}">{{ x.product.name }}</a></th>
+              <td>{{ x.product.description }}</td>
+              <td>{{ x.product.brandname }}</td>
+              <td>{{ x.price }}</td>
+              <td>{{ x.quantity }}</td>
+             
+            </tr>
+            {% endfor %}
+          <!--Table body-->
+          </tbody>
+        </table>
+   
+
+  </section>
+
+  
+{% endblock content %}
+

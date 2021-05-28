@@ -1,0 +1,188 @@
+{% extends "prico/base.html" %}
+{% load static %}
+{% block content %} 
+
+	<div class="container">
+      <h5 style="color: #225662;font-weight: bold;text-transform: UPPERCASE;">Checkout </h5>
+  </div>
+
+  {% if status %}
+  <div class="container">
+  <div class='alert alert-dismissible fade show' style='background-color:#225662;color:#ffff'><button type='button' class='close' data-dismiss='alert' >&times;</button> <strong>{{ status }}</strong></div>
+  </div>
+
+  {% endif %}
+  {% ifequal status 'cartempty' %}
+  <script>
+  	swal("Your Cart is empty.Please Do some shoping");
+  	location.replace("/")
+  </script>
+  {% endifequal %}
+
+<script>
+	$(function(){
+		
+		
+		$("#SelectState").change(function(){
+			console.log("SDFd")
+			var con=$("#SelectState option:selected").val();
+			var output=""
+			mydata={state_id:con}
+			$.ajax({
+				url:"{% url 'select_state' %}",
+		        method:"POST",
+		        data:mydata,
+		        success:function(data){
+		        	console.log(data.city);
+		        	x=data.city;
+		        	output="<option selected disabled>Choose City...</option>"
+		        	for (var i = 0; i < x.length; i++) {
+		        		output+="<option value="+x[i].id+">"+x[i].name+"</option>";
+		        	}
+		        	$("#selectcity").html(output);
+		        }
+
+			});
+		});
+		
+		$("#selectcity").change(function(){
+			console.log("SDFd")
+			var con=$("#selectcity option:selected").val();
+			var output=""
+			mydata={city_id:con}
+			$.ajax({
+				url:"{% url 'select_city' %}",
+		        method:"POST",
+		        data:mydata,
+		        success:function(data){
+		        	console.log(data.area);
+		        	x=data.area;
+		        	output="<option selected disabled>Choose...</option>"
+		        	for (var i = 0; i < x.length; i++) {
+		        		output+="<option value="+x[i].id+">"+x[i].name+"</option>";
+		        	}
+		        	$("#selectarea").html(output);
+		        }
+
+			});
+		});
+		
+
+
+	});
+
+</script>
+  	
+  <section class="contact_section layout_padding">
+   <div class="container">
+   	<div class="row">
+   		<div class="col-md-9">
+			      <form method="POST" id="orderform" enctype="multipart/form-data">
+			        {% csrf_token %}
+			        <div id="checkoutform">
+			       <div class="form-row">
+			           <div class="form-group col-md-6">
+			            <label for="inputState">State</label>
+			            <select id="SelectState" name="state_id" class="form-control" required>
+			              <option selected disabled>Choose State ..</option>
+			              {% for x in state %}
+			              <option value="{{ x.pk }}">{{ x.name }}</option>
+			              {% endfor %}
+			            </select>
+			          </div>
+			          <div class="form-group col-md-6">
+			            <label for="inputState">City</label>
+			            <select id="selectcity" name="city_id" class="form-control" required>
+			              <option selected disabled>Choose City ...</option>
+			              
+			            </select>
+			          </div>
+			       </div> 
+
+			       <div class="form-row">
+			             <div class="form-group col-md-6">
+			            <label for="inputState">Area</label>
+			            <select id="selectarea" name="area_id" class="form-control" required>
+			              <option selected disabled>Choose area...</option>
+			            </select>
+			          </div>
+			          <div class="form-group col-md-6">
+			            <label for="inputPassword4">Zipcode</label>
+			            <input type="number" name="zipcode" class="form-control"placeholder="Zipcode" required>
+			          </div>
+			       </div> 
+
+			       <div class="form-row">
+			          <div class="form-group col-md-6">
+			            <label for="inputEmail4">Address</label>
+			             <textarea class="form-control" id="exampleFormControlTextarea1" name="address" rows="3" required></textarea>
+			          </div>
+			          <div class="form-group col-md-6">
+			            <label for="inputPassword4">Mobile</label>
+			            <input type="text" name="mobile" class="form-control" placeholder="Mobile" required>
+			          </div>
+			       </div>
+
+			        <div class="form-group">
+			          <label for="exampleFormControlTextarea1">Note</label>
+			          <textarea class="form-control" name="notes" rows="3"></textarea>
+			       </div>
+			       <!-- {% if prc_require %} -->
+			       
+<!-- 			      {% endif %}
+ -->			        <br>
+		         <div class="form-group">
+		            <label for="inputState">mode</label>
+		            <select id="inputState" name="mode" class="form-control" required>
+		              <option selected>cod</option>
+		 
+		            </select>
+		          </div>
+		          {% if prc_require %} 
+		          <div class="custom-file">
+			         <input type="file" name="prc" class="custom-file-input" required>
+			         <label class="custom-file-label" for="customFile" >Image of prescription</label>
+			      </div>
+			       {% endif %}
+			        <div class="form-group">
+			          <button type="submit" class="btn" style="background-color: #225662;color: #ffffff">Place The order</button>
+			        </div>
+			       </div>
+			        </form>
+			       
+    	</div>
+
+    	<div class="col-md-3">
+    	  <div  class="container" >
+	         <div  class="card" style="width: 18rem;">
+	           <ul class="list-group list-group-flush">
+	          <li class="list-group-item"><h5>Bill</h5></li>
+	          <li class="list-group-item"><h6>Total Items: <span id="total_item">{{ total_item }}</span></h6></li>
+	          <li class="list-group-item"><h6>Total Price: <span id="total_price">{{ total_price }}</span></h6></li>
+	          <li class="list-group-item"><h6>Delivery Charge: <span id="delivery_charge">{{ delivery_charge }}</span></h6></li>
+	          <li class="list-group-item"><h6>Tax Percentage: <span id="tex_percentage">{{ tex_percentage }}</span> %  (Tex included)</h6></li>
+	          <li class="list-group-item"><h6>Tax Price : <span id="tex_price">{{ tex_price }}</span>(Tex included)</h6></li>
+	          <li class="list-group-item"><h6>Total Bill: <span id="total_bill">{{ total_bill }}</span></h6></li>
+	         </ul>
+	                 
+	          </div>
+        	</div>
+    	</div>
+    </div>
+    </div>
+    {% if status %}
+    <script>
+    	swal({
+             title: "Order Placed successfully"  , 
+             text: data.status,
+             type: "success",
+             timer: 3000
+             },);
+		  	
+  	location.replace("/")
+  </script>
+  {% endif %}
+</section>
+
+
+{% endblock content %}

@@ -1,0 +1,83 @@
+{% extends "prico/base.html" %}
+{% load static %}
+{% block content %}
+  
+  <section class="product_section ">
+    <div class="container">
+      <div class="product_heading">
+        <h2 style="border-radius: 40px;">
+          {{ cat.name }}
+        </h2>
+      </div>
+      <div class="product_container">
+        {% for x,y,a,b,c in product %}
+        <div class="box" style="box-shadow: 0 0 25px 0 rgba(18, 151, 157, 0.46);">
+          <div class="box-content">
+             <a href="$$={{ x.url_slug }}">
+            <div class="img-box">
+              <img src="{{ y }}" alt="">
+            </div>
+          </a>
+            <a href="/$$={{ x.url_slug }}">
+            <div class="detail-box">
+              <div class="text">
+                <h6>
+                  {{ x.name }}
+                </h6>
+                <h6>
+                 <span> 
+                  ₹ {{ a }}</span> | <span>
+                    <del style="color: red;">₹ {{ b }} </del>
+                  </span> | <span>
+                     saving ₹ {{ c }}
+                  </span>
+                </h6>
+              </div>    
+            </div>
+            </a>
+              <div class="btn-box" >
+             <a type="button"  data-sid="{{ x.id }}" id="addtocart" class=" btn  btn-default btn-sm" style="background-color: #225662"><span class="fa fa-cart-plus"></span></a>
+
+            <a type="button" data-sid="{{ x.id }}" id="addremember" class="like btn btn-default btn-sm" type="button"><span class="fa fa-heart"></span></a>
+          </div>
+          </div>
+        
+
+
+        </div>
+        {% endfor %}
+      </div>
+
+    <nav aria-label="Page navigation example">    
+    {% if product.has_other_pages %}
+      <ul class="pagination">
+        {% if product.has_previous %}
+          <li class="page-item"><a href="?page={{ product.previous_page_number }}" class="page-link">Previous</a></li>
+        {% else %}
+          <li class="disabled page-item"><span  class="page-link">Start</span></li>
+        {% endif %}
+        {% for i in product.paginator.page_range %}
+          {% if product.number == i %}
+            <li class="active page-item"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% else %}
+            <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if product.has_next %}
+          <li class="page-item"><a href="?page={{ product.next_page_number }}" class="page-link">Next</a></li>
+        {% else %}
+          <li class="disabled page-item"><span class="page-link">End</span></li>
+        {% endif %}
+      </ul>
+    {% endif %}
+    </nav>
+
+       <div class="product_heading">
+        <h2 style="border-radius: 40px;font-size: 11px;">
+          {{ cat.description }}
+        </h2>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}

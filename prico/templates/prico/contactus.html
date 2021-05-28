@@ -1,0 +1,64 @@
+{% extends "prico/base.html" %}
+{% load static %}
+{% block content %} 
+ <section class="contact_section layout_padding">
+      <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          {% if status %}
+          <div class="alert" >
+          <strong style="color:#225662;">{{ status }}</strong>
+        </div>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="heading_container">
+        <h2>
+          Contact Us
+        </h2>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form_container">
+            <form action="/contactus" method="POST">
+              {% csrf_token %}
+              <div>
+                <input type="text" name="name" placeholder="Your Name" />
+              </div>
+              <div>
+                <input type="text" name="phone" placeholder="Phone Number" />
+              </div>
+              <div>
+                <input type="email" name="email" placeholder="Email" />
+              </div>
+               <div class="form-group">
+                <label for="exampleFormControlTextarea1">Message</label>
+                <textarea name="message" class="form-control" id="
+                exampleFormControlTextarea1" rows="3"></textarea>
+            </div>  
+              <div class="btn_box">
+                <button type="submit">
+                  SEND
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-6 ">
+          <div class="map_container">
+            <div class="map">
+              <div id="googleMap"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+{% endblock content %}
+
+
+

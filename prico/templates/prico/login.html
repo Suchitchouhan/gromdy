@@ -1,0 +1,125 @@
+{% extends "prico/base.html" %}
+{% load static %}
+{% block content %} 
+  <section class="contact_section layout_padding">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          {% if status %}
+          <div class="alert alert-danger" style="background-color:#199fc8;">
+            <strong style="color:#fff;">{{ status }}</strong>
+          </div>
+        {% else %}
+          <div class="alert alert-danger" style="background-color:#199fc8;">
+            <strong style="color:#fff;">We require Login and Signup in order To give you better experience and maintence your privacy.</strong>
+          </div>
+          {% endif %}
+        
+
+        </div>
+      </div>
+    </div>
+    <div class="container" id="alert">
+     
+   </div>
+    <div class="container">
+     
+      <div class="row">
+        <div class="col-md-6">
+           <div class="heading_container">
+        <h2>
+          Login
+        </h2>
+      </div>
+          <div class="form_container">
+            <form action="/login" method="POST">
+              {% csrf_token %}
+              <div>
+                <input type="email" placeholder="email" name="email" required>
+              </div>
+              <div>
+                <input type="password" placeholder="Password" name="password" required>
+              </div>
+              <div>
+                <a href="/forgetpassword" style="color:#199fc8;">Forget Password</a>
+              </div>
+              <div class="btn_box">
+                <button type="sumit">
+                  Sign In
+                </button>
+              </div>
+            </form>
+
+          </div>
+           <div class="heading_container">
+        <h2>
+          Login With otp
+        </h2>
+      </div>
+          <div class="form_container">
+           
+            <form action="/login_with_otp"  method="POST">
+              {% csrf_token %}
+              <div>
+                <input type="email" id="lopemail" placeholder="email" name="email" required>
+              </div>
+               <div class="box btn" style="background-color: #199fc8;color: #ffffff">
+                <a type="button"  value="save" id="btnsendotpforlogin" >
+                  Send OTP
+                </a>              
+              </div>
+              <div>
+                <input type="text" id="loginotp" placeholder="otp" name="otp" required>
+              </div>
+             <div class="btn_box">
+                <button type="sumit">
+                  Login
+                </button>
+              </div>
+              </form>
+
+          </div>
+
+
+        </div>
+        <div class="col-md-6">
+          <div class="form_container">
+             <div class="heading_container">
+            <h2>
+              Sign up
+            </h2>
+           </div>
+            <form action="" method="POST">
+              {% csrf_token %}
+              <div>
+                <input type="email" placeholder="Email" id="emailid" name="email" required>
+              </div>
+              <div>
+                <input type="text" placeholder="First Name" id="first_nameid" name="first_name" required>
+              </div>
+              <div>
+                <input type="text" placeholder="Last Name" id="last_nameid" name="last_name" required>
+              </div>
+            
+              <div>
+                <input type="password" placeholder="Password" name="password" id="passwordid" required>
+              </div>
+              <div class="box btn" style="background-color: #199fc8;color: #ffffff">
+                <a type="button"  value="save" id="btnsignup" >
+                  Sign Up
+                </a>              
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </section>
+
+ 
+  
+{% endblock content %}
+

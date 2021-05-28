@@ -1,0 +1,129 @@
+{% extends "cms/base.html" %}
+      {% block content %}
+<div class="pcoded-content">
+  <div class="pcoded-inner-content">
+    <div class="main-body">
+      <div class="page-wrapper">
+        <div class="page-header card">
+          <div class="row align-items-end">
+            <div class="col-sm-6 col-lg-6">
+              <div class="page-header-title d-flex">
+                <div class="d-inline">
+                  <h4>Add Product</h4>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-6">
+              <div class="page-header-breadcrumb">
+                <div class="page-header-breadcrumb">
+                  <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                      <a href="dashboard.php">
+                        <i class="icofont icofont-home"></i>
+                      </a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="/cms/view_product">Products</a></li>
+                    <li class="breadcrumb-item"><a>Add Product</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>     
+     </div>
+	</div>
+   </div>
+</div>
+<div class="pcoded-content">
+  <div class="pcoded-inner-content">
+  	<div class="page-body">
+  		<div class="card">
+  			<div class="card-block">
+  				   <div class="edit-info">
+                    <div class="card-header p-0 mb-3">
+                      <h5 class="card-header-text">Add Product</h5>
+                    </div>
+                    <form method="POST" action="{% url 'add_product' %}">
+                    	{% csrf_token %}
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="general-info">
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="input-group">
+                                <span class="input-group-addon"><i class="icofont icofont-square"></i>
+                                </span>
+                                <input type="text" name="name" class="form-control" placeholder="Product Name" />
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="input-group">
+                                <span class="input-group-addon">Brandname
+                                </span>
+                                <input type="text" name="brandname" class="form-control" placeholder="Product Name" />
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="input-group">
+                                <span class="input-group-addon"><i class="icofont icofont-clip-board"></i></span>
+                                <textarea type="text" name="description" class="form-control" placeholder="Description about the Product" rows="5" /></textarea>
+                              </div>
+                            </div>                                
+                            <div class="col-md-12 col-lg-6">
+                              <div class="input-group">
+                                <span class="input-group-addon">ACTUAL PRICE</span>
+                                <input type="Number" name="actual_price" class="form-control" placeholder="Actual Price" />
+                              </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                              <div class="input-group">
+                                <span class="input-group-addon">SELLING RRICE</span>
+                                <input type="number" name="price" class="form-control" placeholder="Selling Price" />
+                              </div>
+                            </div>
+                            <div class="col-md-12 ">
+                              <div class="input-group">
+                                <span class="input-group-addon"><i class="icofont icofont-listing-number"></i></span>
+                                  <select name="cat_id" class="form-control" id="inputGroupSelect01">
+                                  	{% for x in category %}
+								    <option value="{{ x.pk }}">{{ x.name }}</option>
+								    {% endfor %}
+								  </select>
+                              </div>
+                            </div>
+                             <div class="col-md-12 ">
+                              <div class="input-group">
+                                <span class="input-group-addon">Is Verified </span>
+                                  <select name="is_verified" class="form-control" id="inputGroupSelect01">
+								    <option value="no">NO</option>
+								    <option value="yes">YES</option>
+								  </select>
+                              </div>
+                            </div>
+                            <div class="col-md-12">
+                              <div class="input-group">
+                                <span class="input-group-addon">Keywords</span>
+                                <textarea type="text" name="keyword" class="form-control" placeholder="Keywords about the Product" rows="5" /></textarea>
+                              </div>
+                            </div>                               
+                            
+                            <div class="col-sm-12 col-md-12 col-lg-12 text-center mt-2">
+                              <button type="submit" class="btn btn-primary m-r-20 edit-cancel">Save</button>
+                              
+                            </div>
+                          </div>                              
+                        </div>
+                      </div>
+                    </div>
+                    </form>
+                  </div>
+  			</div>
+  		</div>
+  	</div>
+  	</div>
+  </div>
+
+
+
+
+{% endblock content %}

@@ -1,0 +1,63 @@
+{% extends "prico/base.html" %}
+{% load static %}
+{% block content %} 
+    <div class="container">
+      <h5 style="color: #225662;font-weight: bold;text-transform: UPPERCASE;">
+    Remember List </h5>
+  </div>
+   
+   <div class="container" id="alert">
+     
+   </div>
+   
+  <section class="contact_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class=" table-responsive" >
+        <table class="table table-hover" style=" font-family: arial, sans-serif;border-collapse: collapse;width: 100%;">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th scope="col">Name</th>
+              <th scope="col">Brandname</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Operation</th>
+            </tr>
+          <!--Table head-->
+          </thead>
+          <!--Table body-->
+          <tbody class="tbody">
+            {% for x,y in remember %}
+            <tr>
+              <th><img src="{{ y }}" width="70px" height="50px"></th>
+              <th><a href="$$={{ x.product.url_slug }}">{{ x.product.name }}</a></th>
+              <td>{{ x.product.brandname }}</td>
+              <td>{{ x.product.price }}</td>
+              <td>
+                <button type="button" style="background-color: #225662;color: #ffffff;border-radius: 1.0rem" name="" data-sid="{{ x.pk }}" id="minus_updatetorememberlist" class="btn  btn-default btn-sm"><span class="fa fa-minus"></span></button>
+                <strong><span class="ffdd{{ x.pk }}">{{ x.quantity }}</span></strong>
+              <button type="button" style="background-color: #225662;color: #ffffff;border-radius: 1.0rem" name="" data-sid="{{ x.pk }}" id="updatetorememberlist" class="btn  btn-default updatetorememberlist btn-sm"><span class="fa fa-plus"></span></button>
+              </td>
+              <td>
+                
+                <button type="button" style="background-color: #225662;color: #ffffff;border-radius: 1.0rem" name="" data-sid="{{ x.pk }}" value="delete" id="deletetorememberlist" class="btn btn-default btn-sm"><span class="fa fa-trash"></span></button>
+                <button type="button" style="background-color: #225662;color: #ffffff;border-radius: 1.0rem" name="" data-sid="{{ x.pk }}" value="send to cart" id="sendtocart" class="btn btn-default btn-sm"><span class="fa fa-cart-plus"></span></button>
+              </td>
+            </tr>
+            {% endfor %}
+          <!--Table body-->
+          </tbody>
+        </table>
+        </div>
+
+        </div>
+         </div>
+
+  </section>
+
+
+  
+  
+{% endblock content %}
+

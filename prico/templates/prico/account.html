@@ -1,0 +1,79 @@
+{% extends "prico/base.html" %}
+{% load static %}
+{% block content %} 
+  <section class="contact_section layout_padding">
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<h5><strong>Welcome {{ account.user.first_name }} {{ account.user.last_name }}</strong></h5>
+				  <p> </p>
+				 
+			</div>
+				
+		</div>
+		<!--  <input type="button" style="background-color: #8019c8;color: #ffffff" name="" value="update" id="updateprofile" class="btn btn-default btn-sm"> -->
+		 <a href="/logout_view" style="background-color: #225662;color: #ffffff" value="logout" class="btn btn-default btn-sm">logout</a>
+		 <hr>
+		 <h5>Orders</h5>
+		 <div class="table-responsive-sm">
+		 <table class="table">
+		  <thead>
+		    <tr>
+		      <th scope="col">Order id</th>
+		      <th scope="col">state</th>
+		      <th scope="col">city</th>
+		      <th scope="col">area</th>
+		      <th scope="col">Zipcode</th>
+		      <th scope="col">Address</th>
+		      <th scope="col">Mobile</th>
+		      <th scope="col">Notes</th>
+		      <th scope="col">Date</th>
+		      <th scope="col">Total Tax</th>
+		      <th scope="col">Total Item Price</th>
+		      <th scope="col">Delivery Charge</th>
+		      <th scope="col">Amount</th>
+		      <th scope="col">Mode</th>
+		      <th scope="col">Order Status</th>
+		      <th scope="col">option</th>
+		    </tr>
+		  </thead>
+		  <tbody id="ordertbody">
+		  	{% for x in order %}
+		    <tr>
+		      <th scope="row">{{ x.uid }}</th>
+		      <th scope="row">{{ x.state }}</th>
+		      <th scope="row">{{ x.city }}</th>
+		      <th scope="row">{{ x.area }}</th>
+		      <th scope="row">{{ x.zipcode }}</th>
+		      <th scope="row">{{ x.address }}</th>
+		      <th scope="row">{{ x.mobile }}</th>
+		      <th scope="row">{{ x.notes }}</th>
+		      <th scope="row">{{ x.date }}</th>
+		      <th scope="row">{{ x.tolal_tax }}</th>
+		      <th scope="row">{{ x.tolal_item_price }}</th>
+		      <th scope="row">{{ x.delivery_charge }}</th>
+		      <th scope="row">{{ x.amount }}</th>
+		      <th scope="row">{{ x.mode }}</th>
+		      <th scope="row">{{ x.status }}</th>
+		      <th>  
+		      	<a href="/order_items/{{ x.id }}" style="background-color: #225662;color: #ffffff;border-radius: 1.0rem" class="btn btn-sm">order items</a>
+		      	<a href="/orderstatus/{{ x.id }}" style="background-color: #225662;color: #ffffff;border-radius: 1.0rem" class="btn btn-sm">order status</a>
+
+		      </th>
+		    </tr>
+
+		    {% endfor %}
+		  </tbody>
+		</table>
+	</div>
+	<hr>
+	
+	<div class="table-responsive-sm orderitems">
+		
+	</div>
+	</div>
+</section>
+
+
+{% endblock content %}

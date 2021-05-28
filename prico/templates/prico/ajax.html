@@ -1,0 +1,653 @@
+  <script>
+  $( function() {
+    $( "#tags" ).autocomplete({
+      source: "{% url 'searchxyz' %}"
+    });
+  } );
+  
+  $("#btnsignup").click(function(){
+    let email=$("#emailid").val();
+    let first_name=$("#first_nameid").val();
+    let last_name=$("#last_nameid").val();
+    // let age=$("#ageid").val();
+    // let gender=$("#genderid").val();
+    let password=$("#passwordid").val();
+    //let csr = $("input[name=csrfmiddlewaretoken").val();
+    if (email == ""){
+      swal("Please Enter Email");
+    }else if(first_name == ""){
+      swal("Please Enter FirstName");
+    }else if(last_name == ""){
+      swal("Please Enter LastName");
+    }else if(password == ""){
+      swal("Please Enter Password");
+    }else{
+      mydata={email:email,first_name:first_name,last_name:last_name,password:password};
+      $.ajax({
+        url:"{% url 'signup' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status != "fail"){
+            $('#emailid').val('');
+            $('#first_nameid').val('');
+            $('#last_nameid').val('');
+            $('#passwordid').val('');
+             swal({
+             title: "Account successfully Created"  , 
+             text: data.status,
+             type: "success",
+             timer: 3000
+             },); 
+            $("#cartvalue").html(data.cart_count);
+          }else{
+           $('#emailid').val('');
+            $('#first_nameid').val('');
+            $('#last_nameid').val('');
+            $('#passwordid').val('');
+           swal({
+             title: "Account successfully Created"  , 
+             text: data.status,
+             type: "success",
+             timer: 3000
+             },); 
+
+          }
+          
+        }
+
+      });
+    }
+  });
+
+  $("#btnsentotp").click(function(){
+    let email = $("#fpemaillid").val()
+    let csr = $("input[name=csrfmiddlewaretoken").val();
+    if (email == ""){
+        swal("Please Enter Email");
+      }else{
+        mydata={email:email,csrfmiddlewaretoken:csr};
+        $.ajax({
+          url:"{% url 'forget_password' %}",
+          method:"POST",
+          data:mydata,
+           success:function(data){
+          if (data.status == "fail"){
+           swal({
+             title: "Email Not Exist"  , 
+             text: "Your Email is not exist .Please Create the account",
+             type: "success",
+             timer: 3000
+             },); 
+          }else{
+            swal({
+             title: "Account successfully Created"  , 
+             text: "OTP has been successfully Sended to your email",
+             type: "success",
+             timer: 3000
+             },); 
+          }
+          
+        }
+
+        });
+      }
+  });
+
+  $("#btnchangepassword").click(function(){
+    var email=$("#fpemaillid").val();
+    var otp=$("#fpotp").val();
+    var password=$("#fppassword").val();
+     let csr = $("input[name=csrfmiddlewaretoken").val();
+     if (email == ""){
+      swal("Please enter Email")
+     }else if (otp == ""){
+       swal("Please enter OTP")
+     }else if (password == ""){
+        swal("Please enter Password")
+     }else{
+      mydata={email:email,otp:otp,password:password,csrfmiddlewaretoken:csr}
+      $.ajax({
+        url:"{% url 'verify_otp' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          $("#alert").html("<div class='alert alert-primary alert-dismissible fade show'><button type='button' class='close' data-dismiss='alert' >&times;</button> <strong>"+data.status+"</strong></div>");
+        }
+      })
+
+     }
+
+  });
+
+  $(".btn-box").on("click","#addtocart",function(){
+    let id = $(this).attr("data-sid");
+    var userid = $.cookie("userid");
+    let csr = $("input[name=csrfmiddlewaretoken").val();
+    if (id == ""){
+      swal("Product ID is not Empty");
+    }else{
+      mydata={product_id:id,userid:userid,csrfmiddlewaretoken:csr};
+       $.ajax({
+        url:"{% url 'add_cart' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status=="alreadyexistsoncart"){
+           swal({
+             title: "Added successfully"  , 
+             text: "Your Product Already Added To CART",
+             type: "success",
+             timer: 3000
+             },); 
+            $("#cartvalue").html(data.cart_count);
+          }else if(data.status == "success"){
+            $("#cartvalue").html(data.cart_count);
+            swal({
+             title: "Added successfully"  , 
+             text: "Your Product successfully Added To CART",
+             type: "success",
+             timer: 3000
+             },); 
+          }else{
+            swal({
+             title: "Added successfully"  , 
+             text: data.status,
+             type: "success",
+             timer: 3000
+             },); 
+            $("#cartvalue").html(data.cart_count);
+          }
+        }
+
+      });
+
+    }
+     
+  });
+   
+
+  
+ $(".action").on("click","#addtocart",function(){
+    var userid = $.cookie("userid");
+    console.log(userid);
+    let id = $(this).attr("data-sid");
+    let csr = $("input[name=csrfmiddlewaretoken").val();
+    if (id == ""){
+      swal("Product ID is not Empty");
+    }else{
+      mydata={product_id:id,userid:userid,csrfmiddlewaretoken:csr};
+       $.ajax({
+        url:"{% url 'add_cart' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status=="alreadyexistsoncart"){
+            swal({
+             title: "Already Exist"  , 
+             text: "Your Product Already Added To CART",
+             type: "success",
+             timer: 3000
+             },); 
+            $("#cartvalue").html(data.cart_count);
+          }else if(data.status == "success"){
+            $("#cartvalue").html(data.cart_count);
+            swal({
+             title: "Added successfully"  , 
+             text: "Your Product successfully Added To CART",
+             type: "success",
+             timer: 3000
+             },); 
+
+            
+          }else{
+            swal({
+             title: "Added successfully"  , 
+             text: data.status,
+             type: "success",
+             timer: 3000
+             },); 
+            $("#cartvalue").html(data.cart_count);
+            
+          }
+        }
+
+      });
+
+    }
+     
+  });
+  
+
+  $("tbody").on("click",".updatecart",function(){
+      let output="";
+      let id = $(this).attr("data-sid");
+      var userid= $.cookie("userid");
+      let csr = $("input[name=csrfmiddlewaretoken").val();
+      mydata={cartid:id,userid:userid};
+      $.ajax({
+        url:"{% url 'update_cart' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status == "Productisnotexists"){
+            $("#alert").html("<div class='alert alert-primary'><strong>"+"Product is not exists"+"</strong></div>");
+            }else{
+             $("#alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert").html("<div class='alert alert-primary alert-dismissible fade show' style='background-color:#225662;color:#ffff'><button type='button' class='close' data-dismiss='alert' >&times;</button> <strong>"+data.status+"</strong></div>");
+        });
+            $("#total_item").html(data.total_item);
+            $("#total_price").html(data.total_price);
+            $("#delivery_charge").html(data.delivery_charge);
+            $("#tex_percentage").html(data.tex_percentage);
+            $("#tex_price").html(data.tex_price);
+            $("#total_bill").html(data.total_bill);
+            $("#cartqty").html(data.qty);
+            $("#dddddd"+id).html(data.qty);
+
+           
+            }
+          }
+      });
+  });
+
+
+$("tbody").on("click","#minus_updatecart",function(){
+      let output="";
+      let id = $(this).attr("data-sid");
+      var userid= $.cookie("userid");
+      let csr = $("input[name=csrfmiddlewaretoken").val();
+      mydata={cartid:id,userid:userid};
+      $.ajax({
+        url:"{% url 'minus_update_cart' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status == "Productisnotexists"){
+            $("#alert").html("<div class='alert alert-primary'><strong>"+"Product is not exists"+"</strong></div>");
+            }else{
+              $("#alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert").html("<div class='alert alert-primary alert-dismissible fade show' style='background-color:#225662;color:#ffff'><button type='button' class='close' data-dismiss='alert' >&times;</button> <strong>"+data.status+"</strong></div>");
+        });
+           
+            $("#total_item").html(data.total_item);
+            $("#total_price").html(data.total_price);
+            $("#delivery_charge").html(data.delivery_charge);
+            $("#tex_percentage").html(data.tex_percentage);
+            $("#tex_price").html(data.tex_price);
+            $("#total_bill").html(data.total_bill);
+            $("#cartqty").html(data.qty);
+            $("#dddddd"+id).html(data.qty);
+
+           
+            }
+          }
+      });
+  });
+
+
+
+  $("tbody").on("click","#deletecart",function(){
+    let id = $(this).attr("data-sid");
+    mythis=this;
+    var userid= $.cookie("userid");
+
+    if (id == ""){
+      swal("Id can not be Empty")
+    }else{
+      mydata={cartid:id,userid:userid};
+      $.ajax({
+        url:"{% url 'delete_cart' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status == "Productisnotexists"){
+            swal({
+             title: " Not Exist"  , 
+             text: "Your product is not Exist",
+             type: "success",
+             timer: 3000
+             },); 
+          }else{
+             $("#alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert").html("<div class='alert alert-primary alert-dismissible fade show' style='background-color:#225662;color:#ffff'><button type='button' class='close' data-dismiss='alert' >&times;</button> <strong>Product has been successfully Deleted</strong></div>");
+        });
+            $(mythis).closest("tr").fadeOut();
+            $("#cartvalue").html(data.cart_count);
+             $("#total_item").html(data.total_item);
+              $("#total_price").html(data.total_price);
+              $("#delivery_charge").html(data.delivery_charge);
+              $("#tex_percentage").html(data.tex_percentage);
+              $("#tex_price").html(data.tex_price);
+              $("#total_bill").html(data.total_bill);
+
+          }
+        }
+
+      })
+    }
+
+  });
+
+  $("#checkout").click(function(){
+    console.log("SDfs")
+    $("#checkoutform").html("<div class='form-row'><div class='form-group col-md-6'><label for='inputState'>Location</label><select id='inputState' name='location' class='form-control'><option selected>Choose...</option><option value='Ghaziabad'>Ghaziabad</option><option value='Noida'>Noida</option><option value='Greater Noida'>Greater Noida</option><option value='Delhi'>Delhi</option></select></div><div class='form-group col-md-6'><label for='inputPassword4'>Zipcode</label><input type='number' name='zipcode' class='form-control'placeholder='Zipcode'></div></div><div class='form-row'><div class='form-group col-md-6'><label for='inputEmail4'>Address</label><textarea class='form-control' id='exampleFormControlTextarea1' name='address' rows='3'></textarea></div><div class='form-group col-md-6'><label for='inputPassword4'>Mobile</label><input type='text' name='mobile' class='form-control' placeholder='Mobile'></div></div><div class='form-group'><label for='exampleFormControlTextarea1'>Note</label><textarea class='form-control' name='notes' rows='3'></textarea></div><div class='custom-file'><input type='file' name='prc' class='custom-file-input' ><label class='custom-file-label' for='customFile'>Image of prescription (option)</label></div><br><div class='alert alert-info'><strong>Currently we have only cod mode available.</strong> </div><div class='form-group'><button type='submit' class='btn' style='background-color: #8019c8;color: #ffffff'>Place The order</button></div>");
+
+  });
+
+
+ $(".btn-box").on("click","#addremember",function(){
+    let id = $(this).attr("data-sid");
+    var userid = $.cookie("userid"); 
+    if (id == ""){
+      swal("Product is not exist");
+    }else{
+      mydata={product_id:id,userid:userid};
+      $.ajax({
+         url:"{% url 'add_remember_list' %}",
+          method:"POST",
+          data:mydata,
+          success:function(data){
+            if (data.status == "fail"){
+              location.replace("/")
+            }else if(data.status == "productnotexists"){
+               swal({
+             title: " Not Exist"  , 
+             text: "Your product is not Exist",
+             type: "fail",
+             timer: 3000
+             },); 
+               location.replace("/")
+            }else{
+              swal({
+             title: "Added successfully"  , 
+             text: data.status,
+             type: "success",
+             timer: 3000
+             },);
+                $("#cartvalue").html(data.cart_count);
+              $("#remember_list").html(data.remember_count);
+            }
+          }
+
+      });
+
+    }
+     
+  });
+
+ $(".action").on("click","#addremember",function(){
+    let id = $(this).attr("data-sid");
+    var userid = $.cookie("userid"); 
+    if (id == ""){
+      swal("Product is not exist");
+    }else{
+      mydata={product_id:id,userid:userid};
+      $.ajax({
+         url:"{% url 'add_remember_list' %}",
+          method:"POST",
+          data:mydata,
+          success:function(data){
+            if (data.status == "fail"){
+               location.replace("/");
+            }else if(data.status == "productnotexists"){
+               swal({
+             title: " Not Exist"  , 
+             text: "Your product is not Exist",
+             type: "fail",
+             timer: 3000
+             },); 
+            }else{
+             swal({
+             title: " Added successfully"  , 
+             text: data.status,
+             type: "success",
+             timer: 3000
+             },); 
+              $("#cartvalue").html(data.cart_count);
+              $("#remember_list").html(data.remember_count);
+            }
+          }
+
+      });
+
+    }
+     
+  });
+ 
+
+  $("tbody").on("click","#deletetorememberlist",function(){
+    let id = $(this).attr("data-sid");
+    var userid = $.cookie("userid");
+    mythis=this;
+    if (id == ""){
+      swal("Id can not be Empty")
+    }else{
+      mydata={remid:id,userid:userid};
+      $.ajax({
+        url:"{% url 'delete_remember_list' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status == "fail"){
+            location.replace("/");
+          }else if(data.status == "Productnotexists"){
+            swal({
+             title: " Not Exist"  , 
+             text: "Your product is not Exist",
+             type: "fail",
+             timer: 3000
+             },); 
+          }else{
+             $("#alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert").html("<div class='alert alert-primary alert-dismissible fade show' style='background-color:#225662;color:#ffff'><button type='button' class='close' data-dismiss='alert' >&times;</button> <strong>Product has been successfully removed from remember list</strong></div>");
+        });
+            $(mythis).closest("tr").fadeOut();
+              $("#cartvalue").html(data.cart_count);
+              $("#remember_list").html(data.remember_count);
+          }
+        }
+
+      })
+    }
+
+  });
+
+
+
+  $("tbody").on("click","#updatetorememberlist",function(){
+      let output="";
+      let id = $(this).attr("data-sid");
+      var userid = $.cookie("userid");
+      let csr = $("input[name=csrfmiddlewaretoken").val();
+        mydata={remid:id,userid:userid};
+        $.ajax({
+          url:"{% url 'update_remember_list' %}",
+          method:"POST",
+          data:mydata,
+          success:function(data){
+            if (data.status == "fail"){
+               $("#alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert").html("<div class='alert alert-primary alert-dismissible fade show' style='background-color:#225662;color:#ffff'><button type='button' class='close' data-dismiss='alert' >&times;</button> <strong>"+data.status+"</strong></div>");
+        });
+              }else{
+             $("#alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert").html("<div class='alert alert-primary alert-dismissible fade show' style='background-color:#225662;color:#ffff'><button type='button' class='close' data-dismiss='alert' >&times;</button> <strong>"+data.status+"</strong></div>");
+        }); 
+             $(".ffdd"+id).html(data.qty);
+             
+              }
+            }
+        });
+      
+  });
+
+
+
+  $("tbody").on("click","#minus_updatetorememberlist",function(){
+      let output="";
+      let id = $(this).attr("data-sid");
+      var userid = $.cookie("userid");
+      let csr = $("input[name=csrfmiddlewaretoken").val();
+        mydata={remid:id,userid:userid};
+        $.ajax({
+          url:"{% url 'minus_update_remember_list' %}",
+          method:"POST",
+          data:mydata,
+          success:function(data){
+            if (data.status == "fail"){
+               $("#alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert").html("<div class='alert alert-primary alert-dismissible fade show' style='background-color:#225662;color:#ffff'><button type='button' class='close' data-dismiss='alert' >&times;</button> <strong>"+data.status+"</strong></div>");
+        });
+              }else{
+             $("#alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert").html("<div class='alert alert-primary alert-dismissible fade show' style='background-color:#225662;color:#ffff'><button type='button' class='close' data-dismiss='alert' >&times;</button> <strong>"+data.status+"</strong></div>");
+        });
+             $(".ffdd"+id).html(data.qty);
+             
+              }
+            }
+        });
+      
+  });
+
+
+ $("tbody").on("click","#sendtocart",function(){
+    let id = $(this).attr("data-sid");
+    mythis=this;
+    if (id == ""){
+      swal("Id can not be Empty")
+    }else{
+      mydata={remid:id};
+      $.ajax({
+        url:"{% url 'send_remember_to_cart' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status == "fail"){
+            swal({
+             title: " Not Exist"  , 
+             text: "Your product is not Exist not exist in remember list" ,
+             type: "success",
+             timer: 3000
+             },); 
+          }else{
+             $("#alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert").html("<div class='alert alert-primary alert-dismissible fade show' style='background-color:#225662;color:#ffff'><button type='button' class='close' data-dismiss='alert' >&times;</button> <strong>"+data.status+"</strong></div>");
+        });
+              $("#cartvalue").html(data.cart_count);
+              $("#remember_list").html(data.remember_count);
+              swal(data.status);
+          }
+        }
+
+      })
+    }
+
+  });
+
+
+
+$("#updateprofile").click(function(){
+  console.log("hf,");
+
+});
+
+
+
+
+
+$("#postreview").click(function(){
+  let id = $(this).attr("data-sid");
+  let review=$("#reivew").val();
+  if (reivew == ""){
+    swal("review connot be Empty");
+  }else{
+    mydata={prod_id:id,comment:review};
+       $.ajax({
+      url:"{% url 'post_review' %}",
+      method:"POST",
+      data:mydata,
+      success:function(data){
+        if (data.status == "login_required"){
+          swal("Please login .Its require For posting your reviews ");
+        }else{
+          swal({
+             title: "Posted successfully"  , 
+             text: "Your Review has been successfully posted",
+             type: "success",
+             timer: 3000
+             },); 
+          $("#reivew").val("")
+          $("#userreview").append("<div class='preview col-md-12' ><h4 style='color: #225662;font-weight: bold;''>"+data.fullname+"</h4><p style='color: #225662;font-weight: bold;''>"+data.comment+"</p></div>")
+        }
+      }
+
+
+    });
+
+  }
+
+});
+
+
+$("#btnsendotpforlogin").click(function(){
+  let email = $("#lopemail").val()
+  let csr = $("input[name=csrfmiddlewaretoken").val();
+  if (email == ""){
+      swal("Please Enter Email");
+    }else{
+      mydata={email:email,csrfmiddlewaretoken:csr};
+      $.ajax({
+        url:"{% url 'send_otp_for_login' %}",
+        method:"POST",
+        data:mydata,
+         success:function(data){
+        if (data.status == "fail"){
+          swal({
+             title: "Failed"  , 
+             text: data.status,
+             type: "success",
+             timer: 3000
+             },);
+        }else{
+          swal({
+             title: "success"  , 
+             text: data.status,
+             type: "success",
+             timer: 3000
+             },);
+        }
+        
+      }
+
+      });
+    }
+});
+
+
+  // $("#btnloginwithotp").click(function(){
+  //   var email=$("#lopemail").val();
+  //   var otp=$("#loginotp").val();
+  //    let csr = $("input[name=csrfmiddlewaretoken").val();
+  //    if (email == ""){
+  //     swal("Please enter Email")
+  //    }else if (otp == ""){
+  //      swal("Please enter OTP")
+  //    }else{
+  //     mydata={email:email,otp:otp,csrfmiddlewaretoken:csr}
+  //     $.ajax({
+  //       url:"{% url 'login_with_otp' %}",
+  //       method:"POST",
+  //       data:mydata,
+  //       success:function(data){
+  //         $("#alert").html("<div class='alert alert-primary alert-dismissible fade show'><button type='button' class='close' data-dismiss='alert' >&times;</button> <strong>"+data.status+"</strong></div>");
+  //       }
+  //     })
+
+  //    }
+
+  // });
+
+
+  </script>   

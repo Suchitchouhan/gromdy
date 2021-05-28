@@ -1,0 +1,218 @@
+<script type="text/javascript">
+
+
+	 $(document).on("change","#chooseImage",function(e2) {
+    var img1 = e2.target.files[0];
+    if(!iEdit.open(img1, true, function(res1){
+      $("#imageFile").attr("src", res1);  
+    })){
+      alert("Whoops! That is not an image!");
+    }
+  });
+
+	 
+	$( function() {
+    $( "#tags" ).autocomplete({
+      source: "{% url 'searchxyz' %}"
+    });
+  } );
+
+
+
+  $("#addfeature").click(function(){
+    var output = ""
+    var name = $("#featurename").val();
+    var des = $("#featuredescription").val();
+    var product_id=$("#product_id").val();
+    console.log(name,des,product_id);
+    if (name == ""){
+      swal("Feature can not be empty");
+    }else if(des == "" ){
+      swal("Description can not be empty");
+    }else{
+      mydata={product_id:product_id,name:name,description:des};
+      $.ajax({
+        url:"{% url 'add_feature' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status == "success") {
+            x=data.feature;
+          for(i=0;i<x.length;i++){
+            output += "<tr id="+"featuretbody"+x[i].id+"><td>"+x[i].name+"</td><td>"+x[i].description+"</td><td>"+"<button  id='deletefeature' data-sid="+x[i].id+" type='button' class='btn btn-sm btn-danger'><i class='ti-trash'></i></button>"+"</td></tr>";}
+            $("#featuretbodyOO").html(output);
+          }else{
+            swal(data.status);
+          }
+        }
+      });
+    }
+  });
+
+    $("#addsideeffect").click(function(){
+    var output = ""
+    var name = $("#sideeffectsummary").val();
+    var des = $("#sideeffectsummary").val();
+    var product_id=$("#product_id").val();
+    console.log(name,des,product_id);
+    if (name == ""){
+      swal("Feature can not be empty");
+    }else if(des == "" ){
+      swal("Description can not be empty");
+    }else{
+      mydata={product_id:product_id,name:name,description:des};
+      $.ajax({
+        url:"{% url 'add_side_effect' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status == "success") {
+            x=data.side_effect;
+          for(i=0;i<x.length;i++){
+            output += "<tr id="+"side_effect"+x[i].id+"><td>"+x[i].name+"</td><td>"+x[i].summery+"</td><td>"+"<button  id='deletesideeffectbutton' data-sid="+x[i].id+" type='button' class='btn btn-sm btn-danger'><i class='ti-trash'></i></button>"+"</td></tr>";}
+            $(".side_effect_body").html(output);
+          }else{
+            swal(data.status);
+          }
+        }
+      });
+    }
+  });
+
+
+
+    $("#submitquesandanswer").click(function(){
+    var output = ""
+    var name = $("#ques").val();
+    var des = $("#answer").val();
+    var product_id=$("#product_id").val();
+    console.log(name,des,product_id);
+    if (name == ""){
+      swal("Feature can not be empty");
+    }else if(des == "" ){
+      swal("Description can not be empty");
+    }else{
+      mydata={product_id:product_id,name:name,description:des};
+      $.ajax({
+        url:"{% url 'add_question' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status == "success") {
+            x=data.question;
+            console.log(x)
+          for(i=0;i<x.length;i++){
+            output += "<tr id="+"ques"+x[i].id+"><td>"+x[i].ques+"</td><td>"+x[i].answer+"</td><td>"+"<button id='deletesquestion' data-sid="+x[i].id+" type='button' class='btn btn-sm btn-danger'><i class='ti-trash'></i></button></td></tr>";
+          }
+            $(".quesandanswer").html(output);
+          }else{
+            swal(data.status);
+          }
+        }
+      });
+    }
+  });
+
+
+
+
+$(".quesandanswer").on("click","#deletesquestion",function(){
+  let id = $(this).attr("data-sid");
+  let csr = $("input[name=csrfmiddlewaretoken").val();
+  mythis=this;
+  if (id==""){
+    swal("fuckyourself do not try to fuckwith me just do work ");
+  }else{
+     mydata={pk:id};
+      $.ajax({
+        url:"{% url 'delete_question' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status == "success") {
+             $("#ques"+id).remove();
+          }else{
+            swal(data.status);
+          }
+        }
+      });
+  }
+
+});
+
+$("#featuretbodyOO").on("click","#deletefeature",function(){
+  let id = $(this).attr("data-sid");
+  mythis=this;
+  if (id==""){
+    swal("fuckyourself do not try to fuckwith me just do work ");
+  }else{
+     mydata={pk:id};
+      $.ajax({
+        url:"{% url 'delete_feature' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status == "success") {
+             $("#featuretbody"+id).remove();
+          }else{
+            swal(data.status);
+          }
+        }
+      });
+  }
+
+});
+
+
+
+$(".side_effect_body").on("click","#deletesideeffectbutton",function(){
+  let id = $(this).attr("data-sid");
+  mythis=this;
+  if (id==""){
+    swal("fuckyourself do not try to fuckwith me just do work ");
+  }else{
+     mydata={pk:id};
+      $.ajax({
+        url:"{% url 'delete_side_effect' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status == "success") {
+             $("#side_effect"+id).remove();
+          }else{
+            swal(data.status);
+          }
+        }
+      });
+  }
+
+});
+
+
+
+
+$(".imagetbody").on("click","#deleteimage",function(){
+  let id = $(this).attr("data-sid");
+  mythis=this;
+  if (id==""){
+    swal("fuckyourself do not try to fuckwith me just do work ");
+  }else{
+     mydata={pk:id};
+      $.ajax({
+        url:"{% url 'delete_image' %}",
+        method:"POST",
+        data:mydata,
+        success:function(data){
+          if (data.status == "success") {
+             $("#imagebody"+id).remove();
+          }else{
+            swal(data.status);
+          }
+        }
+      });
+  }
+
+});
+
+
+</script>
