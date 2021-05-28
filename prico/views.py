@@ -878,7 +878,7 @@ def checkout(request):
 						noti.content=f"Hi \n\n Your order has been successfully placed .\nOrder ID:{o.uid}\nAmount: {o.amount}.\nYour order will be arrive as soon possible,Maximum 1days.\nBe safe and Stay healthy \n\nRegards \n Suchit Chouhan"
 						noti.link="http://gromdy.com/account"
 						noti.save()
-						morder=f"Fullname: {request.user.first_name} {request.user.last_name}\nemail: {request.user.email}Order Id: {o.uid}\nState: {o.statea}\nCity: {o.city}\narea: {o.area}\nZipcode: {o.zipcode}\nAddress: {o.address}\nMobile: {o.mobile}\n"
+						morder=f"Fullname: {request.user.first_name} {request.user.last_name}\nemail: {request.user.email}Order Id: {o.uid}\nState: {o.state}\nCity: {o.city}\narea: {o.area}\nZipcode: {o.zipcode}\nAddress: {o.address}\nMobile: {o.mobile}\n"
 						morder+=f"Notes: {o.notes}\nTotal tax: {o.tolal_tax}\nTotal item price: {o.tolal_item_price}\n"
 						morder+=f"Delivery Charge: {o.delivery_charge}\nAmount: {o.amount}\n\nProduct Details"
 						for x in m_product:
